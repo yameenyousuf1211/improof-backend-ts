@@ -1,4 +1,4 @@
-import joi from 'Joi';
+import joi from 'joi';
 import { validateRequest } from '../../middlewares/validation.middleware';
 import { emailExist } from './common.validation';
 
