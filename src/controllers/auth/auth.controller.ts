@@ -74,7 +74,7 @@ export const resetPasswordLink = asyncHandler(async (req: Request, res: Response
             message: 'User not found'
         });
     }
-
+    // add accessToken
     const accessToken = user.generateAccessToken(user);
     // Respond with success message
     generateResponse({accessToken,link}, 'OTP sent to email', res);
