@@ -66,6 +66,7 @@ export const login = asyncHandler(async (req: Request, res: Response, next: Next
 export const resetPasswordLink = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
     
     const user = await findUser({ email: req.body?.email })
+    const {link} = req.body;
 
     if (!user) {
         return next({
@@ -74,9 +75,9 @@ export const resetPasswordLink = asyncHandler(async (req: Request, res: Response
         });
     }
 
-
+    const accessToken = user.generateAccessToken(user);
     // Respond with success message
-    generateResponse(req.body.link, 'OTP sent to email', res);
+    generateResponse({accessToken,link}, 'OTP sent to email', res);
 })
 
 // verify otp
