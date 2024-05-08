@@ -67,6 +67,7 @@ const userSchema = new Schema<IUser>({
     highestGlucose:{type:Number,default:0},
     lowestGlucose:{type:Number,default:0},
     glucose :{type:Number,default:0},
+    profileCompleted:{type:Boolean,default:false},
 }, { timestamps: true, versionKey: false });
 
 // hash password before saving

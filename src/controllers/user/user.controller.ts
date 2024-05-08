@@ -24,7 +24,7 @@ export const currentUser = asyncHandler(async (req: Request, res: Response, next
 });
 
 export const createProfile = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
-    req.body.profileCompleted = true;
+    
     
     const { calculateMacroFromWeight, dailyCarbsConsume, dailyCaloriesConsume, dailyFatConsume, dailyProteinConsume } = req.body;
 
@@ -42,7 +42,7 @@ export const createProfile = asyncHandler(async (req: Request, res: Response, ne
     }
 
     const payload = await updateUser({ _id: req.user._id }, data);
-
+    req.body.profileCompleted = true;
     generateResponse(payload, 'Profile created successfully', res);
 });
 

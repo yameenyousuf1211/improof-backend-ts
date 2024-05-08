@@ -13,6 +13,7 @@ export interface IUser extends Document {
     name?: string;
     firstName: string;
     lastName: string;
+    profileCompleted?: boolean;
     calculateMacroFromWeight?: boolean;
     age?: number;
     otp?:number;
