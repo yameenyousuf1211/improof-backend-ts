@@ -41,8 +41,8 @@ export const createProfile = asyncHandler(async (req: Request, res: Response, ne
         data = { ...req.body, carbs, fat, protein };
     }
 
-    const payload = await updateUser({ _id: req.user._id }, data);
     req.body.profileCompleted = true;
+    const payload = await updateUser({ _id: req.user._id }, data);
     generateResponse(payload, 'Profile created successfully', res);
 });
 
