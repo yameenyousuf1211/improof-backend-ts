@@ -59,7 +59,6 @@ const userSchema = new Schema<IUser>({
     carbs:{type:Number,default:0},
     protein:{type:Number,default:0},
     registerType : {type: String,default:REGISTER_TYPE.MANUAL, enum:Object.values(REGISTER_TYPE)},
-    profileComplete:{type:Boolean,default:false},
     terraUserId: {type: String},
     terraRefId: {type:String},
     totalBurnedCalories:{type:Number},

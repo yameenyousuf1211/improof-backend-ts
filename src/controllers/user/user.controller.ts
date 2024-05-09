@@ -30,8 +30,8 @@ export const createProfile = asyncHandler(async (req: Request, res: Response, ne
 
     let data = {};
 
-    console.log(calculateMacroFromWeight);
-    console.log(typeof calculateMacroFromWeight);
+    
+    req.body.profileCompleted = true;
     
     if (calculateMacroFromWeight) {
         const { carbs, fat, protein } = calculateMacro(req.body);
@@ -41,7 +41,6 @@ export const createProfile = asyncHandler(async (req: Request, res: Response, ne
         data = { ...req.body, carbs, fat, protein };
     }
 
-    req.body.profileCompleted = true;
     const payload = await updateUser({ _id: req.user._id }, data);
     generateResponse(payload, 'Profile created successfully', res);
 });
