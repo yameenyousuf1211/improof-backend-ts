@@ -1,4 +1,4 @@
-import { appleLogin, appleSignup, changePassword, facebookLogin, facebookSignup, getRefeshToken, googleLogin, googleSignup, login, logout, register, resetPassword, resetPasswordLink,  } from "../../controllers";
+import { appleLogin, appleSignup, changePassword, disableTwoFactor, enableTwoFactor, facebookLogin, facebookSignup, getRefeshToken, googleLogin, googleSignup, login, logout, register, resetPassword, resetPasswordLink, verifyTwoFactor,  } from "../../controllers";
 import { Router } from "express";
 import { appleValidation, changePasswordValidation, facebookValidation, googleValidation, loginValidation, resetPasswordLinkValidation, registerValidation, resetPasswordValidation } from "../../validator";
 import authMiddleware from "../../middlewares/auth.middleware";
@@ -15,7 +15,6 @@ export default class AuthAPI {
         this.router.post('/register',registerValidation,register);
         this.router.post('/login',loginValidation ,login);
         this.router.post('/reset/password/link',resetPasswordLinkValidation,resetPasswordLink);
-        // this.router.put('/otp/verify',otpVerifyValidation,verifyOTP);
         this.router.post('/google/login',googleValidation,googleLogin)
         this.router.post('/google/register',googleValidation,googleSignup)
         this.router.post('/facebook/login',facebookValidation,facebookLogin)
@@ -27,6 +26,9 @@ export default class AuthAPI {
         this.router.put('/reset-password',authMiddleware(Object.values(ROLES)),resetPasswordValidation,resetPassword);
         this.router.post('/change-password',authMiddleware(Object.values(ROLES)),changePasswordValidation,changePassword);
         this.router.post('/logout',authMiddleware(Object.values(ROLES)),logout)
+        this.router.put('/two-factor-auth-enable',authMiddleware(Object.values(ROLES)),enableTwoFactor)
+        this.router.put('/two-factor-auth-verify',authMiddleware(Object.values(ROLES)),verifyTwoFactor)
+        this.router.put('/two-factor-auth-disable',authMiddleware(Object.values(ROLES)),disableTwoFactor)
         
     }
 

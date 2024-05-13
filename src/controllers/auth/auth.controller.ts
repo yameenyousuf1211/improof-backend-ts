@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import { asyncHandler, generateResponse, hashPassword, parseBody } from "../../utils/helpers";
-import {  createUser, findUser, getAllUsers, updateUser } from "../../models";
+import {  createUser, deleteTwoFactorAuthentication, findUser, findUserTwoFactorAuthentication, getAllUsers, updateTwoFactorAuthentication, updateUser } from "../../models";
 import { generateRandomOTP, REGISTER_TYPE, ROLES, STATUS_CODES } from "../../utils/constants";
-import { IUser } from "../../interface";
+
 import jwt from 'jsonwebtoken';
 // register user
 
@@ -17,8 +17,8 @@ export const register = asyncHandler(async (req: Request, res: Response, next: N
 
     // hash password
     req.body.password = await hashPassword(req.body.password);
-
-    const user = await createUser(req.body);
+    
+    const user = await createUser({...req.body,fcmTokens:req.body.fcmToken});
 
     const accessToken = await user.generateAccessToken();
     const refreshToken = await user.generateRefreshToken();
@@ -49,6 +49,23 @@ export const login = asyncHandler(async (req: Request, res: Response, next: Next
         message: 'Invalid password'
     });
 
+    const checkTwoFactorAuthentication = await findUserTwoFactorAuthentication({ user: user._id })
+
+    if(checkTwoFactorAuthentication && !checkTwoFactorAuthentication.verify) {
+        req.user = user;
+        return next({
+            statusCode: STATUS_CODES.UNAUTHORIZED,
+            message: 'Two factor authentication required'
+        });
+    }
+    
+    if(checkTwoFactorAuthentication){
+        if(!user.fcmTokens.includes(body.fcmToken)) {
+            req.user = user;
+         return  enableTwoFactor(req,res,next);
+        }
+    }
+  
     const accessToken = await user.generateAccessToken();
     const refreshToken = await user.generateRefreshToken();
     user.refreshToken = refreshToken;
@@ -80,46 +97,7 @@ export const resetPasswordLink = asyncHandler(async (req: Request, res: Response
     generateResponse({accessToken,link}, 'OTP sent to email', res);
 })
 
-// verify otp
-export const verifyOTP = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
-    const { email, otp } = req.body;
 
-    // Find user by email
-    const user = await findUser({ email }).select('+otp').select('+otpExpiresAt');
-
-    if (!user) {
-        return next({
-            statusCode: STATUS_CODES.NOT_FOUND,
-            message: 'User not found'
-        });
-    }
-
-    // Check if OTP matches
-    if (user.otp !== parseInt(otp)) {
-        return next({
-            statusCode: STATUS_CODES.BAD_REQUEST,
-            message: 'Invalid OTP'
-        });
-    }
-
-    // Check if OTP has expired
-    if (user.otpExpiresAt < new Date()) {
-        return next({
-            statusCode: STATUS_CODES.BAD_REQUEST,
-            message: 'OTP has expired'
-        });
-    }
-
-    // Clear OTP and OTP expiry in user's record
-    user.otp = null;
-    user.otpExpiresAt = null;
-    await user.save();
-
-    const token = await user.generateAccessToken();
-
-    // Respond with success message
-    generateResponse(token, 'OTP verified successfully', res);
-})
 
 // reset password 
 export const resetPassword = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
@@ -389,3 +367,74 @@ function decodeRefreshToken(refreshToken: string): { _id: string } | null {
         return null;
     }
 }
+
+export const enableTwoFactor = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+    const { authenticationMethod,contact } = req.body;
+ 
+    const otpCode = generateRandomOTP();
+    const otpExpiry = Date.now() + 30000;
+
+    if(authenticationMethod === 'text') {
+        console.log("Send OTP code to phone number");
+        // need twilio or any other service to send otp code to phone number
+    }
+    if(authenticationMethod === 'email') {
+    console.log("Send OTP code to phone number");
+    // need resend service to send code to email
+    }
+
+    await updateTwoFactorAuthentication({ user: req.user._id }, { authenticationMethod, otpCode, otpExpiry,contact,user: req.user._id});
+    generateResponse({otpCode,otpExpiry,authenticationMethod}, 'Two factor authentication code sended', res);
+})
+
+
+export const verifyTwoFactor = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+    const { otpCode } = req.body;
+
+    const user = await findUser({ _id: req.user._id });
+    const twoFactor = await findUserTwoFactorAuthentication({ user: user._id });
+
+    if (!twoFactor) {
+        return next({
+            statusCode: STATUS_CODES.NOT_FOUND,
+            message: 'Two factor authentication not enabled'
+        })
+    }
+
+    if (twoFactor.otpCode !== otpCode) {
+        return next({
+            statusCode: STATUS_CODES.BAD_REQUEST,
+            message: 'Invalid OTP code'
+        })
+    }
+
+    if (twoFactor.otpExpiry < Date.now()) {
+        return next({
+            statusCode: STATUS_CODES.BAD_REQUEST,
+            message: 'OTP code expired'
+        })
+    }
+
+    await updateTwoFactorAuthentication({ user: user._id }, { verify: true });
+   
+    const accessToken = await user.generateAccessToken();
+    const refreshToken = await user.generateRefreshToken();
+    user.refreshToken = refreshToken;
+    await user.save();
+
+    req.session = { accessToken };
+    generateResponse({accessToken,refreshToken}, 'Two factor authentication verified', res);
+})
+
+export const disableTwoFactor = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+    const user = await findUser({ _id: req.user._id });
+    const data =  await deleteTwoFactorAuthentication({ user: user._id });
+
+    if(!data) return next({
+        statusCode: STATUS_CODES.NOT_FOUND,
+        message: 'Two factor authentication not enabled'
+    })
+    generateResponse(data, 'Two factor authentication disabled', res);
+})
+
+
