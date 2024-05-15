@@ -96,3 +96,14 @@ export const fetchAllUsers = asyncHandler(async (req: Request, res: Response, ne
 
     generateResponse(usersData, 'List fetched successfully', res);
 });
+
+export const checkUsername = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+    const user = await findUser({ username: req.body.username });
+
+    if(user) return next({
+        statusCode: STATUS_CODES.CONFLICT,
+        message: 'username already exists'
+    })
+    
+    generateResponse(null, 'Username available', res);
+});
