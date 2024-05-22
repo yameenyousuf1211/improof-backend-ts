@@ -4,6 +4,15 @@ import mongoose, { Schema, Document } from 'mongoose';
 interface IWatchData extends Document {
     user: string;
     watch: string;
+    icon:string;
+    supportedTypes: {
+        activity: boolean;
+        body: boolean;
+        nutrition: boolean;
+        daily: boolean;
+        sleep: boolean;
+        menstruation: boolean;
+      };
     bodyData: {
         glucoseMonitor: boolean;
         dailyGlucoseLevel: boolean;
@@ -33,6 +42,15 @@ interface IWatchData extends Document {
 const WatchDataSchema: Schema = new Schema({
     user: { type: Schema.Types.ObjectId, ref: 'users'},
     watch: { type: String },
+    icon:{type:String},
+    supportedTypes:{
+        activity:{type:Boolean},
+        body:{type:Boolean},
+        nutrition:{type:Boolean},
+        daily:{type:Boolean},
+        sleep:{type:Boolean},
+        menstruation:{type:Boolean}
+    },
     bodyData: {
         glucoseMonitor: { type: Boolean },
         dailyGlucoseLevel: { type: Boolean },
@@ -67,3 +85,13 @@ export const findWatches = (query?:any) => WatchDataModel.find(query);
 export const updateWatch = (query:any, update:any) => WatchDataModel.updateOne(query,update)
 export const deleteWatch = (query:any) => WatchDataModel.deleteOne(query)
 
+export const topWatches =  () => WatchDataModel.aggregate([
+    {
+        $group: {
+            _id: "$watch",
+            count: { $sum: 1 }
+        }
+    },
+    { $sort: { count: -1 } },
+    { $limit: 3 }
+])

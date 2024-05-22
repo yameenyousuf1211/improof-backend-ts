@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { asyncHandler, generateResponse } from "../../utils/helpers";
-import { createWatch, deleteWatch, findWatches, updateWatch } from "../../models";
+import { createWatch, deleteWatch, findWatches, topWatches, updateWatch } from "../../models";
 
 export const attachWatch = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
     req.body.user = req.user._id;
@@ -47,4 +47,10 @@ export const updateWatches = asyncHandler(async (req: Request, res: Response, ne
 export const deleteWatches = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
     const watch = await deleteWatch({_id:req.params.id})
     generateResponse(watch, `Watch deleted`, res);
+})
+
+
+export const getTopThreeWatches = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+    const data = await topWatches();
+    generateResponse(data, `Top three watches fetched`, res);
 })
