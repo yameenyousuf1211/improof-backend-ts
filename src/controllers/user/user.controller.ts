@@ -24,14 +24,14 @@ export const currentUser = asyncHandler(async (req: Request, res: Response, next
 });
 
 export const createProfile = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
-    req.body.profileCompleted = true;
+    
     
     const { calculateMacroFromWeight, dailyCarbsConsume, dailyCaloriesConsume, dailyFatConsume, dailyProteinConsume } = req.body;
 
     let data = {};
 
-    console.log(calculateMacroFromWeight);
-    console.log(typeof calculateMacroFromWeight);
+    
+    req.body.profileCompleted = true;
     
     if (calculateMacroFromWeight) {
         const { carbs, fat, protein } = calculateMacro(req.body);
@@ -42,7 +42,6 @@ export const createProfile = asyncHandler(async (req: Request, res: Response, ne
     }
 
     const payload = await updateUser({ _id: req.user._id }, data);
-
     generateResponse(payload, 'Profile created successfully', res);
 });
 
@@ -96,4 +95,15 @@ export const fetchAllUsers = asyncHandler(async (req: Request, res: Response, ne
     }
 
     generateResponse(usersData, 'List fetched successfully', res);
+});
+
+export const checkUsername = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+    const user = await findUser({ username: req.body.username });
+
+    if(user) return next({
+        statusCode: STATUS_CODES.CONFLICT,
+        message: 'username already exists'
+    })
+    
+    generateResponse(null, 'Username available', res);
 });

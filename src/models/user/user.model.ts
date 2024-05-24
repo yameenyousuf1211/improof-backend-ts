@@ -4,7 +4,7 @@ import aggregatePaginate from "mongoose-aggregate-paginate-v2";
 import { IPaginationFunctionParams, IPaginationResult } from "../../utils/interfaces";
 import { ACTIVITY_LEVELS, GENDER_TYPES, HEIGHT_UNITS, REGISTER_TYPE, ROLES, WEIGHT_UNITS } from "../../utils/constants";
 import { getMongoosePaginatedData } from "../../utils/helpers";
-import { compare, hash } from "bcrypt";
+import { compare } from "bcrypt";
 import { QueryWithHelpers } from "mongoose";
 import { sign } from "jsonwebtoken";
 import {IUser} from '../../interface/index'
@@ -20,8 +20,6 @@ const userSchema = new Schema<IUser>({
     photo: { type: String, default: null },
     email: { type: String, lowercase: true, trim: true },
     age:{type:Number,default:null},
-    otp:{type:Number,select:false},
-    otpExpireAt:{type:Date,select:false},
     heightValue: { type: Number, default: 0 },
     whyUseIamproof:{type:String,default:null},
     heightUnit: { type: String, enum: Object.values(HEIGHT_UNITS), default: HEIGHT_UNITS.IMPERIAL }, // 'cm' for metric, 'in' for Imperial
@@ -59,7 +57,6 @@ const userSchema = new Schema<IUser>({
     carbs:{type:Number,default:0},
     protein:{type:Number,default:0},
     registerType : {type: String,default:REGISTER_TYPE.MANUAL, enum:Object.values(REGISTER_TYPE)},
-    profileComplete:{type:Boolean,default:false},
     terraUserId: {type: String},
     terraRefId: {type:String},
     totalBurnedCalories:{type:Number},
@@ -67,6 +64,7 @@ const userSchema = new Schema<IUser>({
     highestGlucose:{type:Number,default:0},
     lowestGlucose:{type:Number,default:0},
     glucose :{type:Number,default:0},
+    profileCompleted:{type:Boolean,default:false},
 }, { timestamps: true, versionKey: false });
 
 // hash password before saving
