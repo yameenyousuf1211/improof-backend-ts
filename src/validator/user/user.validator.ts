@@ -6,6 +6,7 @@ const selectWearableValidator = joi.object({
 });
 
 const createProfileValidator = joi.object({
+    username: joi.string().required(),
     age: joi.number().required(),
     heightValue: joi.number().required(),
     inches: joi.number().optional(),
