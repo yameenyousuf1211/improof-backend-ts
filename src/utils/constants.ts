@@ -102,7 +102,7 @@ export const calculateMacro = (user: IUser) => {
 
   bmr = calculateBMR(user);
   tdee = calculateTDEE(user, bmr);
-
+  
   let calorieIntake;
   if (user.goalWeight! > user.weightValue!) {
     // User wants to gain weight
@@ -119,7 +119,7 @@ export const calculateMacro = (user: IUser) => {
   const fat = Math.round((0.25 * calorieIntake!) / 9);
   const carbs = Math.round((0.45 * calorieIntake!) / 4);
 
-  return { protein, fat, carbs };
+  return { protein, fat, carbs,calorieIntake };
 }
 
 export const calculateMacroFromCalories = function (dailyCaloriesConsume: number,dailyFatConsume: number,dailyProteinConsume: number,dailyCarbsConsume: number) {

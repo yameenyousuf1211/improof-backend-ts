@@ -11,6 +11,7 @@ declare global {
 export interface IUser extends Document {
     _id?: string;
     name?: string;
+    username?:string;
     firstName: string;
     lastName: string;
     profileCompleted?: boolean;

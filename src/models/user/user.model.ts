@@ -12,6 +12,7 @@ import {IUser} from '../../interface/index'
 
 
 const userSchema = new Schema<IUser>({
+    username:{ type: String, default: null },
     firstName: { type: String, default: null },
     lastName: { type: String, default: null },
     name:{type:String ,default:null},
