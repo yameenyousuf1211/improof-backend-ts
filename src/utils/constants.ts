@@ -104,15 +104,17 @@ export const calculateMacro = (user: IUser) => {
   tdee = calculateTDEE(user, bmr);
   
   let calorieIntake;
-  if (user.goalWeight! > user.weightValue!) {
-    // User wants to gain weight
-    calorieIntake = tdee! + 500;
-  } else if (user.goalWeight! < user.weightValue!) {
-    // User wants to lose weight
-    calorieIntake = tdee! - 500;
-  } else {
-    // User wants to maintain weight
-    calorieIntake = tdee;
+  if(user.goalWeight){
+    if (user.goalWeight > user.weightValue!) {
+      // User wants to gain weight
+      calorieIntake = tdee! + 500;
+    } else if (user.goalWeight < user.weightValue!) {
+      // User wants to lose weight
+      calorieIntake = tdee! - 500;
+    } else {
+      // User wants to maintain weight
+      calorieIntake = tdee;
+    }
   }
 
   const protein = Math.round((0.3 * calorieIntake!) / 4);
