@@ -98,8 +98,9 @@ export const fetchAllUsers = asyncHandler(async (req: Request, res: Response, ne
 });
 
 export const checkUsername = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
-    const user = await findUser({ username: req.body.username });
-
+    const username = req.body.username;
+    const user = await findUser({ username: { $regex: new RegExp('^' + username + '$', 'i') } });
+    
     if(user) return next({
         statusCode: STATUS_CODES.CONFLICT,
         message: 'username already exists'
