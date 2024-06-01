@@ -112,6 +112,6 @@ export const checkUsername = asyncHandler(async (req: Request, res: Response, ne
 export const getUserCalories = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
 
     const user = await findUser({ _id: req.user._id });
-    const {calorieIntake} = calculateMacro(req.body);
-    generateResponse(calorieIntake, 'Calories calculated successfully', res);
+    const {calorieIntake,carbs,fat,protein} = calculateMacro(req.body);
+    generateResponse({calorieIntake,carbs,fat,protein}, 'Calories calculated successfully', res);
 });
