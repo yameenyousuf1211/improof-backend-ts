@@ -152,7 +152,9 @@ export const lookupFields = [
   'activityData.activeTime.watch',
   'activityData.caloriesConsumed.watch',
   'activityData.caloriesBurned.watch',
-  'NutritionData.dailyMacroGoal.watch',
-  'NutritionData.targetDailyNutrients.watch',
-  'NutritionData.calorieBreakdownMacro.watch'
+  'activityData.distanceTravel.watch',
+  'nutritionData.dailyMacroGoal.watch',
+  'nutritionData.targetDailyNutrients.watch',
+  'nutritionData.calorieBreakdownMacro.watch',
+  'nutritionData.weight.watch'
 ];
