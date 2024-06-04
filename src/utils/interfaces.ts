@@ -1,3 +1,4 @@
+
 export interface IPaginationResult<T> {
     data: T[];
     pagination: {
@@ -20,3 +21,4 @@ export interface IPaginationFunctionParams {
     select?: string,
     sort?: Record<string, any>,
 }
+

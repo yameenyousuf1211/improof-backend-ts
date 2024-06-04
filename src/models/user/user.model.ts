@@ -36,6 +36,7 @@ const userSchema = new Schema<IUser>({
     password: { type: String},
     role: { type: String, default: "user", enum: Object.values(ROLES)},
     isActive: { type: Boolean, default: true },
+    isBlocked: { type: Boolean, default: false },
     location: {
         type: { type: String, enum: ["Point"], default: "Point" },
         coordinates: { type: [Number, Number], default: [0, 0] },
