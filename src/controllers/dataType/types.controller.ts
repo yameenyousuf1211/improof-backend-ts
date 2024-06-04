@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { asyncHandler, generateResponse } from "../../utils/helpers";
 import { createDataType, getAllDataTypes, getDataType, updateDataType } from "../../models/types/type.model";
 import mongoose, { PipelineStage } from "mongoose";
+import { lookupFields } from "../../utils/constants";
 
 export const createType = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
     req.body.user = req.user._id;
@@ -25,6 +26,17 @@ export const getTypes = asyncHandler(async (req: Request, res: Response, next: N
     const query:PipelineStage[] = [];
     
     query.push({$match:{user: new mongoose.Types.ObjectId(req.user._id as string)}});
+
+      lookupFields.forEach(field => {
+        query.push({
+          $lookup: {
+            from: 'watchdatas',
+            localField: field,
+            foreignField: '_id',
+            as: field,
+          },
+        });
+      });
 
     const types = await getAllDataTypes({ query, page, limit });
     generateResponse(types, `Types fetched`, res);

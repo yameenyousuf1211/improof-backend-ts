@@ -141,3 +141,18 @@ export const calculateMacroFromCalories = function (dailyCaloriesConsume: number
       carbs: carbGrams
   };
 };
+
+export const lookupFields = [
+  'bodyData.dailyGlucoseLevelReport.watch',
+  'bodyData.glucoseMonitor.watch',
+  'bodyData.respiratoryRate.watch',
+  'bodyData.heartrate.watch',
+  'activityData.calories.watch',
+  'activityData.steps.watch',
+  'activityData.activeTime.watch',
+  'activityData.caloriesConsumed.watch',
+  'activityData.caloriesBurned.watch',
+  'NutritionData.dailyMacroGoal.watch',
+  'NutritionData.targetDailyNutrients.watch',
+  'NutritionData.calorieBreakdownMacro.watch'
+];

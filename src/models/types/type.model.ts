@@ -16,21 +16,25 @@ const TypeSchema: Schema = new Schema({
     bodyData: {
         glucoseMonitor: {
             watch: { type: Schema.Types.ObjectId, ref: 'WatchData' },
+            active: {type:Boolean,default:false},
             col: {type:Number,default:1},
             row: {type:Number,default:1},
         },
         dailyGlucoseLevelReport: {
             watch: { type: Schema.Types.ObjectId, ref: 'WatchData' },
+            active: {type:Boolean,default:false},
             col: {type:Number,default:2},
             row: {type:Number,default:1},
         },
         respiratoryRate: {
             watch: { type: Schema.Types.ObjectId, ref: 'WatchData' },
+            active: {type:Boolean,default:false},
             col: {type:Number,default:3},
             row: {type:Number,default:1},
         },
         heartrate: {
             watch: { type: Schema.Types.ObjectId, ref: 'WatchData' },
+            active: {type:Boolean,default:false},
             col: {type:Number,default:4},
             row: {type:Number,default:1},
         },
@@ -38,26 +42,31 @@ const TypeSchema: Schema = new Schema({
     activityData: {
         calories: {
             watch: { type: Schema.Types.ObjectId, ref: 'WatchData' },
+            active: {type:Boolean,default:false},
             col: {type:Number,default:1},
             row: {type:Number,default:2},
         },
         steps: {
             watch: { type: Schema.Types.ObjectId, ref: 'WatchData' },
+            active: {type:Boolean,default:false},
             row: {type:Number,default:2}, 
             col: {type:Number,default:2},
         },
         activeTime: {
             watch: { type: Schema.Types.ObjectId, ref: 'WatchData' },
+            active: {type:Boolean,default:false},
             col: {type:Number,default:3},
             row: {type:Number,default:2},
         },
         caloriesConsumed: {
             watch: { type: Schema.Types.ObjectId, ref: 'WatchData' },
+            active: {type:Boolean,default:false},
             col: {type:Number,default:4},
             row: {type:Number,default:2},
         },
         caloriesBurned: {
             watch: { type: Schema.Types.ObjectId, ref: 'WatchData' },
+            active: {type:Boolean,default:false},
             col: {type:Number,default:5},
             row: {type:Number,default:2},
         },
@@ -65,16 +74,19 @@ const TypeSchema: Schema = new Schema({
     NutritionData: {
         dailyMacroGoal: {
             watch: { type: Schema.Types.ObjectId, ref: 'WatchData' },
+            active: {type:Boolean,default:false},
             col: {type:Number,default:1},
             row: {type:Number,default:3},
         },
         targetDailyNutrients: {
             watch: { type: Schema.Types.ObjectId, ref: 'WatchData' },
+            active: {type:Boolean,default:false},
             col: {type:Number,default:2},
             row: {type:Number,default:3},
         },
         calorieBreakdownMacro: {
             watch: { type: Schema.Types.ObjectId, ref: 'WatchData' },
+            active: {type:Boolean,default:false},
             col: {type:Number,default:3},
             row: {type:Number,default:3},
         }
