@@ -70,8 +70,14 @@ const TypeSchema: Schema = new Schema({
             col: {type:Number,default:5},
             row: {type:Number,default:2},
         },
+        distanceTravel:{
+            watch: { type: Schema.Types.ObjectId, ref: 'WatchData' },
+            active: {type:Boolean,default:false},
+            col: {type:Number,default:6},
+            row: {type:Number,default:2},
+        }
     },
-    NutritionData: {
+    nutritionData: {
         dailyMacroGoal: {
             watch: { type: Schema.Types.ObjectId, ref: 'WatchData' },
             active: {type:Boolean,default:false},
@@ -89,6 +95,12 @@ const TypeSchema: Schema = new Schema({
             active: {type:Boolean,default:false},
             col: {type:Number,default:3},
             row: {type:Number,default:3},
+        },
+        weight:{
+            watch: { type: Schema.Types.ObjectId, ref: 'WatchData' },
+            active: {type:Boolean,default:false},
+            col: {type:Number,default:4},
+            row: {type:Number,default:3},
         }
     }
 }, { timestamps: true });
@@ -100,7 +112,7 @@ const TypeModel = mongoose.model<IType>('Type', TypeSchema);
 
 export const createDataType = (obj:IType) => TypeModel.create(obj);
 export const getDataType = (query:any) => TypeModel.findOne(query);
-export const updateDataType = (id:string, obj:IType) => TypeModel.findByIdAndUpdate(id, obj, {new:true});
+export const updateDataType = (query:any, obj:IType) => TypeModel.findOneAndUpdate(query, obj, {new:true});
 export const deleteDataType = (id:string) => TypeModel.findByIdAndDelete(id);
 
 export const getAllDataTypes = async ({ query, page, limit }: IPaginationFunctionParams)
