@@ -4,6 +4,7 @@ import RootAPI from "./root/root.route";
 import AuthAPI from "./auth/auth.route";
 import UserAPI from "./user/user.route";
 import WatchAPI from "./watch/watch.route";
+import DataTypeAPI from "./dataTypes/types.route";
 
 export default class API {
     router: Router;
@@ -22,6 +23,7 @@ export default class API {
         routeGroups.push(new AuthAPI(router));
         routeGroups.push(new UserAPI(router));
         routeGroups.push(new WatchAPI(router));
+        routeGroups.push(new DataTypeAPI(router));
     }
 
     setContentType(req: Request, res: Response, next: NextFunction) {

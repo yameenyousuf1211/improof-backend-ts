@@ -11,6 +11,7 @@ declare global {
 export interface IUser extends Document {
     _id?: string;
     name?: string;
+    username?:string;
     firstName: string;
     lastName: string;
     profileCompleted?: boolean;
@@ -37,6 +38,7 @@ export interface IUser extends Document {
     nutritionGoal?: number;
     goalWeight?: number;
     inches?: number;
+    isBlocked?: boolean;
     goalWeightUnit?: string;
     activityLevel?: string;
     isActive?: boolean;

@@ -58,26 +58,25 @@ export const getMongoosePaginatedData = async (
 }
 
 // aggregate pagination with mongoose paginate library
-// export const getMongooseAggregatePaginatedData = async ({ model, page = 1, limit = 10, query = [] }) => {
-//     const options = {
-//         page,
-//         limit,
-//         customLabels: {
-//             totalDocs: 'totalItems',
-//             docs: 'data',
-//             limit: 'perPage',
-//             page: 'currentPage',
-//             meta: 'pagination',
-//         },
-//     };
+export const getMongooseAggregatePaginatedData = async ({ model, page = 1, limit = 10, query = [] }: { model: any, page?: number, limit?: number, query?: any[] }) => {
+    const options = {
+        page,
+        limit,
+        customLabels: {
+            totalDocs: 'totalItems',
+            docs: 'data',
+            limit: 'perPage',
+            page: 'currentPage',
+            meta: 'pagination',
+        },
+    };
+    const myAggregate = model.aggregate(query);
+    const { data, pagination } = await model.aggregatePaginate(myAggregate, options);
 
-//     const myAggregate = model.aggregate(query);
-//     const { data, pagination } = await model.aggregatePaginate(myAggregate, options);
+    delete pagination?.pagingCounter;
 
-//     delete pagination?.pagingCounter;
-
-//     return { data, pagination };
-// }
+    return { data, pagination };
+}
 
 export const asyncHandler = (requestHandler: RequestHandler) => {
     return (req: Request, res: Response, next: NextFunction) => {

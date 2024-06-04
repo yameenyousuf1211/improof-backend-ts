@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { checkUsername, createProfile, currentUser, editGoals, fetchAllUsers, selectWearable, updateProfile } from "../../controllers";
+import { checkUsername, createProfile, currentUser, editGoals, fetchAllUsers, getUserCalories, selectWearable, updateProfile } from "../../controllers";
 import authMiddleware from "../../middlewares/auth.middleware";
 import { ROLES } from "../../utils/constants";
-import { createProfileValidation, editGoalValidation, selectWearableValidation, updateProfileValidation } from "../../validator";
+import { calorieIntakeValidation, createProfileValidation, editGoalValidation, selectWearableValidation, updateProfileValidation } from "../../validator";
 
 export default class UserAPI {
     constructor(private readonly router: Router) {
@@ -19,6 +19,7 @@ export default class UserAPI {
         this.router.put('/profile/update',authMiddleware(Object.values(ROLES)),updateProfileValidation,updateProfile);
         this.router.put('/wearable',authMiddleware(Object.values(ROLES)),selectWearableValidation,selectWearable);
         this.router.put('/edit-goal',authMiddleware(Object.values(ROLES)),editGoalValidation,editGoals);
+        this.router.post('/calories/calculation',authMiddleware(Object.values(ROLES)),calorieIntakeValidation,getUserCalories)
     }
 
     getRouter() {

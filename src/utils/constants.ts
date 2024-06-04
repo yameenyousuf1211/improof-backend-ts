@@ -102,24 +102,23 @@ export const calculateMacro = (user: IUser) => {
 
   bmr = calculateBMR(user);
   tdee = calculateTDEE(user, bmr);
-
-  let calorieIntake;
-  if (user.goalWeight! > user.weightValue!) {
-    // User wants to gain weight
-    calorieIntake = tdee! + 500;
-  } else if (user.goalWeight! < user.weightValue!) {
-    // User wants to lose weight
-    calorieIntake = tdee! - 500;
-  } else {
-    // User wants to maintain weight
-    calorieIntake = tdee;
+  
+  let calorieIntake = tdee;
+  if(user.goalWeight){
+    if (user.goalWeight > user.weightValue!) {
+      // User wants to gain weight
+      calorieIntake = tdee! + 500;
+    } else if (user.goalWeight < user.weightValue!) {
+      // User wants to lose weight
+      calorieIntake = tdee! - 500;
+    } 
   }
 
   const protein = Math.round((0.3 * calorieIntake!) / 4);
   const fat = Math.round((0.25 * calorieIntake!) / 9);
   const carbs = Math.round((0.45 * calorieIntake!) / 4);
 
-  return { protein, fat, carbs };
+  return { protein, fat, carbs,calorieIntake };
 }
 
 export const calculateMacroFromCalories = function (dailyCaloriesConsume: number,dailyFatConsume: number,dailyProteinConsume: number,dailyCarbsConsume: number) {
@@ -142,3 +141,18 @@ export const calculateMacroFromCalories = function (dailyCaloriesConsume: number
       carbs: carbGrams
   };
 };
+
+export const lookupFields = [
+  'bodyData.dailyGlucoseLevelReport.watch',
+  'bodyData.glucoseMonitor.watch',
+  'bodyData.respiratoryRate.watch',
+  'bodyData.heartrate.watch',
+  'activityData.calories.watch',
+  'activityData.steps.watch',
+  'activityData.activeTime.watch',
+  'activityData.caloriesConsumed.watch',
+  'activityData.caloriesBurned.watch',
+  'NutritionData.dailyMacroGoal.watch',
+  'NutritionData.targetDailyNutrients.watch',
+  'NutritionData.calorieBreakdownMacro.watch'
+];

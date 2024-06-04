@@ -6,6 +6,7 @@ const selectWearableValidator = joi.object({
 });
 
 const createProfileValidator = joi.object({
+    username: joi.string().required(),
     age: joi.number().required(),
     heightValue: joi.number().required(),
     inches: joi.number().optional(),
@@ -59,7 +60,6 @@ const updateProfileValidator = joi.object({
     // activityLevel: joi.string().valid('daily', 'often', 'sometimes', 'rarely').required(),
     gender: joi.string().valid('male','female').required(),
     address: joi.string().optional(),
-
 })
 const editGoalValidator = joi.object({
     inches: joi.number().optional(),
@@ -90,6 +90,25 @@ const editGoalValidator = joi.object({
         otherwise: joi.optional().allow(null),
     }),    
 })
+
+const calorieIntakeValidator = joi.object({
+    
+    age: joi.number().optional(),
+    heightValue: joi.number().required(),
+    heightUnit: joi.string().valid('cm','in').required(),
+    weightValue: joi.number().required(),
+    weightUnit: joi.string().valid('kg', 'lbs').required(),
+    gender: joi.string().valid('male','female').required(),
+    activityLevel: joi.string().valid('daily', 'often', 'sometimes', 'rarely').required(),
+    goalWeight: joi.number().optional(),
+    inches:joi.number().when('heightUnit', {
+        is: 'in',
+        then: joi.required(),
+        otherwise: joi.forbidden(),
+    }),
+})
+
+export const calorieIntakeValidation = validateRequest(calorieIntakeValidator);
 export const createProfileValidation = validateRequest(createProfileValidator);
 export const updateProfileValidation = validateRequest(updateProfileValidator);
 export const selectWearableValidation = validateRequest(selectWearableValidator);

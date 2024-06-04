@@ -17,29 +17,7 @@ export const updateWatches = asyncHandler(async (req: Request, res: Response, ne
     const userId = req.user._id; 
 
     const watches = await findWatches({ user: userId, _id: { $ne: req.params.id } });
-
-    for (const watch of watches) {
-        const existingBodyData: { [key: string]: boolean } = watch.bodyData;
-        const existingActivityData: { [key: string]: boolean } = watch.activityData;
-        const existingNutritionData: { [key: string]: boolean } = watch.nutritionData;
-
-        for (const key of Object.keys(req.body.bodyData)) {
-            if (existingBodyData[key] && req.body.bodyData[key]) {
-                return generateResponse(null, `${key} is already selected in another watch.`, res);
-            }
-        }
-        for(const key of Object.keys(req.body.activityData)){
-            if(existingActivityData[key] && req.body.activityData[key]){
-                return generateResponse(null, `${key} is already selected in another watch.`, res);
-            }
-        }
-        for(const key of Object.keys(req.body.nutritionData)){
-            if(existingNutritionData[key] && req.body.nutritionData[key]){
-                return generateResponse(null, `${key} is already selected in another watch.`, res);
-            }
-        }
-    }
-
+    
     const watch = await updateWatch({ _id: req.params.id }, req.body);
     generateResponse(watch, `Watch updated`, res);
 });

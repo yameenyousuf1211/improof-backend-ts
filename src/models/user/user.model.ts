@@ -12,6 +12,7 @@ import {IUser} from '../../interface/index'
 
 
 const userSchema = new Schema<IUser>({
+    username:{ type: String, default: null },
     firstName: { type: String, default: null },
     lastName: { type: String, default: null },
     name:{type:String ,default:null},
@@ -35,6 +36,7 @@ const userSchema = new Schema<IUser>({
     password: { type: String},
     role: { type: String, default: "user", enum: Object.values(ROLES)},
     isActive: { type: Boolean, default: true },
+    isBlocked: { type: Boolean, default: false },
     location: {
         type: { type: String, enum: ["Point"], default: "Point" },
         coordinates: { type: [Number, Number], default: [0, 0] },
