@@ -143,7 +143,7 @@ export const calculateMacroFromCalories = function (dailyCaloriesConsume: number
 };
 
 export const lookupFields = [
-  'bodyData.dailyGlucoseLevelReport.watch',
+  'bodyData.dailyGlucoseLevel.watch',
   'bodyData.glucoseMonitor.watch',
   'bodyData.respiratoryRate.watch',
   'bodyData.heartrate.watch',
