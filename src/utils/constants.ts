@@ -147,14 +147,14 @@ export const lookupFields = [
   'bodyData.glucoseMonitor.watch',
   'bodyData.respiratoryRate.watch',
   'bodyData.heartrate.watch',
-  'activityData.calories.watch',
+  'activityData.dailyCaloriesGoal.watch',
   'activityData.steps.watch',
   'activityData.activeTime.watch',
   'activityData.caloriesConsumed.watch',
   'activityData.caloriesBurned.watch',
-  'activityData.distanceTravel.watch',
+  'activityData.distanceTraveled.watch',
   'nutritionData.dailyMacroGoal.watch',
   'nutritionData.targetDailyNutrients.watch',
-  'nutritionData.calorieBreakdownMacro.watch',
+  'nutritionData.calorieBreakdown.watch',
   'nutritionData.weight.watch'
 ];

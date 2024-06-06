@@ -30,7 +30,7 @@ const selectTypeValidator = joi.object({
         }).optional(),
     }).optional(),
     activityData: joi.object({
-        calories: joi.object({
+        dailyCaloriesGoal: joi.object({
             watch: joi.string().hex().length(24).allow(null),
             active: joi.boolean(),
             col: joi.number(),
@@ -60,7 +60,7 @@ const selectTypeValidator = joi.object({
             col: joi.number(),
             row: joi.number(),
         }).optional(),
-        distanceTravel: joi.object({
+        distanceTraveled: joi.object({
             watch: joi.string().hex().length(24).allow(null),
             active: joi.boolean(),
             col: joi.number(),
@@ -80,7 +80,7 @@ const selectTypeValidator = joi.object({
             col: joi.number(),
             row: joi.number(),
         }).optional(),
-        calorieBreakdownMacro: joi.object({
+        calorieBreakdown: joi.object({
             watch: joi.string().hex().length(24).allow(null),
             active: joi.boolean(),
             col: joi.number(),
