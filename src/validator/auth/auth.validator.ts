@@ -5,7 +5,8 @@ import { emailExist } from './common.validation';
 const registerValidator = joi.object({
     email: joi.string().email({minDomainSegments:2}).required().trim(),
     password: joi.string().min(6).required(),
-    name: joi.string().required(),
+    firstName: joi.string().required(),
+    lastName: joi.string().required(),
     role: joi.string().valid('user','admin').default('user'),
     fcmToken: joi.string().required(),
 });
@@ -17,7 +18,8 @@ const loginValidator = joi.object({
 });
 
 const googleValidator = joi.object({
-    name: joi.string().optional(),
+    firstName: joi.string().optional(),
+    lastName: joi.string().optional(),
     email: joi.string().email().required().trim(),
     socialId: joi.string().required(),
     role: joi.string().valid('user','admin').default('user').optional(),
@@ -25,7 +27,8 @@ const googleValidator = joi.object({
 });
 
 const facebookValidator = joi.object({
-    name: joi.string().optional(),
+    firstName: joi.string().optional(),
+    lastName: joi.string().optional(),
     email: joi.string().email().required().trim(),
     socialId: joi.string().required(),
     role: joi.string().valid('user','admin').default('user').optional(),
@@ -33,7 +36,8 @@ const facebookValidator = joi.object({
 });
 
 const appleValidator = joi.object({
-    name: joi.string().required(),
+    firstName: joi.string().optional(),
+    lastName: joi.string().optional(),
     email: joi.string().email().optional().trim(),
     socialId: joi.string().required(),
     role: joi.string().valid('user','admin').default('user').optional(),
