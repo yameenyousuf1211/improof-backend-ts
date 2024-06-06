@@ -30,7 +30,7 @@ const selectTypeValidator = joi.object({
         }).optional(),
     }).optional(),
     activityData: joi.object({
-        dailyCaloriesGoal: joi.object({
+        dailyCalorieGoal: joi.object({
             watch: joi.string().hex().length(24).allow(null),
             active: joi.boolean(),
             col: joi.number(),
