@@ -40,7 +40,7 @@ const TypeSchema: Schema = new Schema({
         },
     },
     activityData: {
-        calories: {
+        dailyCalorieGoal: {
             watch: { type: Schema.Types.ObjectId, ref: 'WatchData' },
             active: {type:Boolean,default:false},
             col: {type:Number,default:1},
@@ -70,7 +70,7 @@ const TypeSchema: Schema = new Schema({
             col: {type:Number,default:5},
             row: {type:Number,default:2},
         },
-        distanceTravel:{
+        distanceTraveled:{
             watch: { type: Schema.Types.ObjectId, ref: 'WatchData' },
             active: {type:Boolean,default:false},
             col: {type:Number,default:6},
