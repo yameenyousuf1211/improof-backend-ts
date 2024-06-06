@@ -15,12 +15,12 @@ const TypeSchema: Schema = new Schema({
     },
     bodyData: {
         glucoseMonitor: {
-            watch: { type: Schema.Types.ObjectId, ref: 'WatchData' },
+            watch: { type: Schema.Types.ObjectId, ref: 'WatchData',default:'' },
             active: {type:Boolean,default:false},
             col: {type:Number,default:1},
             row: {type:Number,default:1},
         },
-        dailyGlucoseLevelReport: {
+        dailyGlucoseLevel: {
             watch: { type: Schema.Types.ObjectId, ref: 'WatchData' },
             active: {type:Boolean,default:false},
             col: {type:Number,default:2},
