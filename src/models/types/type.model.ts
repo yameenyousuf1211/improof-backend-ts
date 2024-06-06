@@ -90,7 +90,7 @@ const TypeSchema: Schema = new Schema({
             col: {type:Number,default:2},
             row: {type:Number,default:3},
         },
-        calorieBreakdownMacro: {
+        calorieBreakdown: {
             watch: { type: Schema.Types.ObjectId, ref: 'WatchData' },
             active: {type:Boolean,default:false},
             col: {type:Number,default:3},
