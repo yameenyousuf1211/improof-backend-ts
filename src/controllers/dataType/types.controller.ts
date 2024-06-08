@@ -54,6 +54,8 @@ export const getTypes = asyncHandler(async (req: Request, res: Response, next: N
       });
 
     const types = await getAllDataTypes({ query, page, limit });
+    console.log(JSON.stringify(types));
+    
     if(!types.data.length) return next({
         message: 'No types found',
         statusCode:STATUS_CODES.NOT_FOUND

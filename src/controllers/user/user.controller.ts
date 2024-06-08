@@ -24,23 +24,15 @@ export const currentUser = asyncHandler(async (req: Request, res: Response, next
 });
 
 export const createProfile = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
-
-
     const { calculateMacroFromWeight, dailyCarbsConsume, dailyCaloriesConsume, dailyFatConsume, dailyProteinConsume } = req.body;
-
     let data = {};
-
-
     req.body.profileCompleted = true;
-
     if (calculateMacroFromWeight) {
-
-        
         const { carbs, fat, protein } = calculateMacro(req.body);
         data = { ...req.body, carbs, fat, protein };
     } else {
         const { carbs, fat, protein } = calculateMacroFromCalories(dailyCaloriesConsume, dailyFatConsume, dailyProteinConsume, dailyCarbsConsume);
-        data = { ...req.body, carbs, fat, protein };
+       data = { ...req.body, carbs, fat, protein }; 
     }
 
     const payload = await updateUser({ _id: req.user._id }, data);

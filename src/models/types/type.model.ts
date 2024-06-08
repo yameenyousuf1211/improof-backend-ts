@@ -15,7 +15,7 @@ const TypeSchema: Schema = new Schema({
     },
     bodyData: {
         glucoseMonitor: {
-            watch: { type: Schema.Types.ObjectId, ref: 'WatchData',default:'' },
+            watch: { type: Schema.Types.ObjectId, ref: 'WatchData' },
             active: {type:Boolean,default:false},
             col: {type:Number,default:1},
             row: {type:Number,default:1},
@@ -103,7 +103,7 @@ const TypeSchema: Schema = new Schema({
             row: {type:Number,default:3},
         }
     }
-}, { timestamps: true });
+}, { timestamps: true , versionKey: false });
 
 TypeSchema.plugin(mongoosePaginate);
 TypeSchema.plugin(aggregatePaginate);

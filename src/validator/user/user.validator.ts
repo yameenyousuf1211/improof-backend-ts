@@ -23,26 +23,10 @@ const createProfileValidator = joi.object({
     dob: joi.date().required(),
     calculateMacroFromWeight: joi.boolean().required(),
 
-   dailyCaloriesConsume: joi.number().when("calculateMacroFromWeight", {
-       is: false,
-       then: joi.required(),
-       otherwise: joi.forbidden()
-   }),
-   dailyFatConsume: joi.number().when("calculateMacroFromWeight", {
-       is: false,
-       then: joi.required(),
-       otherwise: joi.forbidden(),
-   }),
-   dailyProteinConsume: joi.number().when("calculateMacroFromWeight", {
-       is: false,
-       then: joi.required(),
-       otherwise: joi.forbidden(),
-   }),
-   dailyCarbsConsume: joi.number().when("calculateMacroFromWeight", {
-       is: false,
-       then: joi.required(),
-       otherwise: joi.forbidden(),
-   }),    
+   dailyCaloriesConsume: joi.number().optional(),
+   dailyFatConsume: joi.number().optional(),
+   dailyProteinConsume: joi.number().optional(),
+   dailyCarbsConsume: joi.number().optional(),
 })
 
 const updateProfileValidator = joi.object({ 
