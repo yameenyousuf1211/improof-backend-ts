@@ -41,12 +41,14 @@ export const createProfile = asyncHandler(async (req: Request, res: Response, ne
 
 export const updateProfile = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
 
-    const isUserExist = await findUser({ email: req.body.email, _id: { $ne: req.user._id } });
 
-    if (isUserExist) return next({
-        status: STATUS_CODES.CONFLICT,
-        message: 'Email already exists'
-    })
+    if(req.body.email){
+        const isUserExist = await findUser({ email: req.body.email, _id: { $ne: req.user._id } });
+        if (isUserExist) return next({
+            statusCode: STATUS_CODES.CONFLICT,
+            message: 'Email already exists'
+        })
+    }
 
     const user = await updateUser({ _id: req.user._id }, req.body);
     generateResponse(user, 'Profile updated successfully', res);
