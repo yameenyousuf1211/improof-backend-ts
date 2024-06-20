@@ -38,14 +38,15 @@ const TypeSchema: Schema = new Schema({
             col: {type:Number,default:4},
             row: {type:Number,default:1},
         },
-    },
-    activityData: {
-        dailyCalorieGoal: {
+        weight:{
             watch: { type: Schema.Types.ObjectId, ref: 'WatchData' },
             active: {type:Boolean,default:false},
-            col: {type:Number,default:1},
-            row: {type:Number,default:2},
-        },
+            col: {type:Number,default:5},
+            row: {type:Number,default:1},
+        }
+    },
+    activityData: {
+     
         steps: {
             watch: { type: Schema.Types.ObjectId, ref: 'WatchData' },
             active: {type:Boolean,default:false},
@@ -58,12 +59,7 @@ const TypeSchema: Schema = new Schema({
             col: {type:Number,default:3},
             row: {type:Number,default:2},
         },
-        caloriesConsumed: {
-            watch: { type: Schema.Types.ObjectId, ref: 'WatchData' },
-            active: {type:Boolean,default:false},
-            col: {type:Number,default:4},
-            row: {type:Number,default:2},
-        },
+     
         caloriesBurned: {
             watch: { type: Schema.Types.ObjectId, ref: 'WatchData' },
             active: {type:Boolean,default:false},
@@ -96,12 +92,18 @@ const TypeSchema: Schema = new Schema({
             col: {type:Number,default:3},
             row: {type:Number,default:3},
         },
-        weight:{
+        caloriesConsumed: {
             watch: { type: Schema.Types.ObjectId, ref: 'WatchData' },
             active: {type:Boolean,default:false},
             col: {type:Number,default:4},
             row: {type:Number,default:3},
-        }
+        },
+        dailyCalorieGoal: {
+            watch: { type: Schema.Types.ObjectId, ref: 'WatchData' },
+            active: {type:Boolean,default:false},
+            col: {type:Number,default:5},
+            row: {type:Number,default:3},
+        },
     }
 }, { timestamps: true , versionKey: false });
 
