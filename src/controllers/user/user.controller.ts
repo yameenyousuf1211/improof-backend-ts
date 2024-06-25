@@ -41,6 +41,9 @@ export const createProfile = asyncHandler(async (req: Request, res: Response, ne
 
 export const updateProfile = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
 
+
+
+
     if(req.body.email){
         const isUserExist = await findUser({ email: req.body.email, _id: { $ne: req.user._id } });
         if (isUserExist) return next({
