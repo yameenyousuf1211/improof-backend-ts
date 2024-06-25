@@ -10,6 +10,12 @@ const selectTypeValidator = joi.object({
             col: joi.number(),
             row: joi.number(),
         }).optional(),
+        weight: joi.object({
+            watch: joi.string().hex().length(24).allow(null),
+            active: joi.boolean(),
+            col: joi.number(),
+            row: joi.number(),
+        }).optional(),
         dailyGlucoseLevel: joi.object({
             watch: joi.string().hex().length(24).allow(null),
             active: joi.boolean(),
@@ -30,12 +36,7 @@ const selectTypeValidator = joi.object({
         }).optional(),
     }).optional(),
     activityData: joi.object({
-        dailyCalorieGoal: joi.object({
-            watch: joi.string().hex().length(24).allow(null),
-            active: joi.boolean(),
-            col: joi.number(),
-            row: joi.number(),
-        }).optional(),
+  
         steps: joi.object({
             watch: joi.string().hex().length(24).allow(null),
             active: joi.boolean(),
@@ -48,12 +49,7 @@ const selectTypeValidator = joi.object({
             col: joi.number(),
             row: joi.number(),
         }).optional(),
-        caloriesConsumed: joi.object({
-            watch: joi.string().hex().length(24).allow(null),
-            active: joi.boolean(),
-            col: joi.number(),
-            row: joi.number(),
-        }).optional(),
+  
         caloriesBurned: joi.object({
             watch: joi.string().hex().length(24).allow(null),
             active: joi.boolean(),
@@ -86,7 +82,13 @@ const selectTypeValidator = joi.object({
             col: joi.number(),
             row: joi.number(),
         }).optional(),
-        weight: joi.object({
+        caloriesConsumed: joi.object({
+            watch: joi.string().hex().length(24).allow(null),
+            active: joi.boolean(),
+            col: joi.number(),
+            row: joi.number(),
+        }).optional(),
+        dailyCalorieGoal: joi.object({
             watch: joi.string().hex().length(24).allow(null),
             active: joi.boolean(),
             col: joi.number(),
