@@ -83,16 +83,25 @@ export const updateTerraRefId = asyncHandler(async (req: Request, res: Response,
 
 export const fetchAllUsers = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
     const page: number = +(req.query.page || 1);
-    const limit = +(req.query.limit || 10);
-    const query = { role: { $ne: ROLES.ADMIN } };
-
-    const usersData = await getAllUsers({ query, page, limit });
-    if (usersData?.data?.length === 0) {
-        generateResponse(null, 'No user found', res);
-        return;
+    const limit: number = +(req.query.limit || 10);
+    const search: string | undefined = req.query.search?.toString(); // Ensure search is treated as string or undefined
+    let query: any = { role: { $ne: ROLES.ADMIN } }; // Define query as any type due to dynamic nature
+    console.log(search);
+    
+    if (search) {
+        query = {
+            ...query,
+                 email: { $regex: new RegExp(search, 'i') } 
+        };
     }
 
-    generateResponse(usersData, 'List fetched successfully', res);
+    const usersData = await getAllUsers({ query, page, limit });
+
+    if (!usersData || usersData.data.length === 0) {
+        return generateResponse(null, 'No user found', res); // Handle case where no users are found
+    }
+
+    return generateResponse(usersData, 'List fetched successfully', res); // Return users data if found
 });
 
 export const checkUsername = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {

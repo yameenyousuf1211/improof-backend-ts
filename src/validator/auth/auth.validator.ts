@@ -7,7 +7,7 @@ const registerValidator = joi.object({
     password: joi.string().min(6).required(),
     firstName: joi.string().required(),
     lastName: joi.string().required(),
-    role: joi.string().valid('user','admin').default('user'),
+    role: joi.string().valid('user','admin','sub-admin').default('user'),
     fcmToken: joi.string().required(),
 });
 
