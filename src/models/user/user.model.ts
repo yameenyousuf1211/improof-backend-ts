@@ -67,6 +67,7 @@ const userSchema = new Schema<IUser>({
     lowestGlucose:{type:Number,default:0},
     glucose :{type:Number,default:0},
     profileCompleted:{type:Boolean,default:false},
+    isDeleted:{type:Boolean,default:false}
 }, { timestamps: true, versionKey: false });
 
 // hash password before saving
@@ -112,9 +113,9 @@ const UserModel = model("User", userSchema);
 export const createUser = (obj: Record<string, any>): Promise<any> => UserModel.create(obj);
 
 // find user by query
-export const findUser = (query: Record<string, any>): QueryWithHelpers<any, Document> => UserModel.findOne(query);
+export const findUser = (query: Record<string, any>): QueryWithHelpers<any, Document> => UserModel.findOne({...query,isDeleted:false});
 
-export const updateUser = (query:Record<string,any>,update:Record<string,any>):QueryWithHelpers<any,Document> => UserModel.findOneAndUpdate(query,update,{new:true});
+export const updateUser = (query:Record<string,any>,update:Record<string,any>):QueryWithHelpers<any,Document> => UserModel.findOneAndUpdate({...query},update,{new:true});
 
 // get all users
 export const getAllUsers = async ({ query, page, limit, populate }: IPaginationFunctionParams)

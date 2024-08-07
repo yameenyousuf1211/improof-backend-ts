@@ -38,6 +38,7 @@ export interface IUser extends Document {
     nutritionGoal?: number;
     goalWeight?: number;
     inches?: number;
+    isDeleted: boolean;
     isBlocked?: boolean;
     goalWeightUnit?: string;
     activityLevel?: string;

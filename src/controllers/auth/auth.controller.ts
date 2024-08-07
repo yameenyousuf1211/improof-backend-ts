@@ -437,4 +437,20 @@ export const disableTwoFactor = asyncHandler(async (req: Request, res: Response,
     generateResponse(data, 'Two factor authentication disabled', res);
 })
 
+export const deleteAccount = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+    
+    const isUserExist = await findUser({ _id: req.user._id });
+    
+    if(!isUserExist) return next({
+        statusCode: STATUS_CODES.NOT_FOUND,
+        message: 'User not found'
+    });
 
+    const user = await updateUser(
+        { _id: req.user._id },
+        { $set: { isDeleted: true } }
+    );
+    
+    req.session = null;
+    generateResponse(user, 'Account deleted successfully', res);
+})
