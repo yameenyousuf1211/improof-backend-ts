@@ -51,10 +51,7 @@ const userSchema = new Schema<IUser>({
     fcmTokens: { type: [{ type: String }], default: [] },
     online: { type: Boolean, default: false },
     refreshToken: { type: String, select: false },
-    socialId :{type:String,default:null,index: {
-        unique: true,
-        partialFilterExpression: { socialId: { $type: 'string' } },
-    }},
+    socialId :{type:String,default:null},
     fat:{type:Number,default:0},
     carbs:{type:Number,default:0},
     protein:{type:Number,default:0},
