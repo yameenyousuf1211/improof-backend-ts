@@ -47,6 +47,7 @@ export const HEIGHT_UNITS = Object.freeze({
   
   // Define and freeze  for activity levels
 export const ACTIVITY_LEVELS = Object.freeze({
+    NEVER:"never",
     DAILY: 'daily',
     OFTEN: 'often',
     SOMETIMES:'sometimes',
@@ -92,6 +93,9 @@ const calculateTDEE = (user:IUser,bmr:number) => {
   } else if (user.activityLevel == 'rarely') {
     tdee = bmr * 1.725;
   }
+    else if (user.activityLevel == 'never') {
+    tdee = bmr * 1.9;
+    }
   return tdee;
 }
 
