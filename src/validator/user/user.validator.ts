@@ -17,7 +17,7 @@ const createProfileValidator = joi.object({
     stepsGoal: joi.number().required(),
     goalWeight: joi.number().required(),
     goalWeightUnit: joi.string().valid('kg', 'lbs').required(),
-    activityLevel: joi.string().valid('daily', 'often', 'sometimes', 'rarely').required(),
+    activityLevel: joi.string().valid('daily', 'often', 'sometimes', 'rarely','never').required(),
     whyUseIamproof: joi.string().required(),
     address: joi.string().required(),
     dob: joi.date().required(),
@@ -49,7 +49,7 @@ const editGoalValidator = joi.object({
     inches: joi.number().optional(),
     stepsGoal: joi.number().optional(),
     goalWeight: joi.number().optional(),
-     activityLevel: joi.string().valid('daily', 'often', 'sometimes', 'rarely').required(),
+     activityLevel: joi.string().valid('daily', 'often', 'sometimes', 'rarely','never').required(),
      goalWeightUnit: joi.string().valid('kg', 'lbs').optional(),
      calculateMacroFromWeight: joi.boolean().optional(),
 
