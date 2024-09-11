@@ -41,9 +41,6 @@ export const createProfile = asyncHandler(async (req: Request, res: Response, ne
 
 export const updateProfile = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
 
-
-
-
     if(req.body.email){
         const isUserExist = await findUser({ email: req.body.email, _id: { $ne: req.user._id } });
         if (isUserExist) return next({
@@ -62,7 +59,11 @@ export const editGoals = asyncHandler(async (req: Request, res: Response, next: 
     const user = await findUser({ _id: req.user._id });
 
     let updatedGoals = {};
-
+    console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+    console.log(req.body);
+    
+    // console.log(calculateMacroFromWeight, dailyCarbsConsume, dailyCaloriesConsume, dailyFatConsume, dailyProteinConsume);
+    
     if (calculateMacroFromWeight) {
         const { carbs, fat, protein } = calculateMacro(user);
         updatedGoals = { ...req.body, carbs, fat, protein };

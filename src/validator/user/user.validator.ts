@@ -76,14 +76,13 @@ const editGoalValidator = joi.object({
 })
 
 const calorieIntakeValidator = joi.object({
-    
     age: joi.number().optional(),
     heightValue: joi.number().required(),
     heightUnit: joi.string().valid('cm','in').required(),
     weightValue: joi.number().required(),
     weightUnit: joi.string().valid('kg', 'lbs').required(),
     gender: joi.string().valid('male','female').required(),
-    activityLevel: joi.string().valid('daily', 'often', 'sometimes', 'rarely').required(),
+    activityLevel: joi.string().valid('daily', 'often', 'sometimes', 'rarely','never').required(),
     goalWeight: joi.number().optional(),
     inches:joi.number().when('heightUnit', {
         is: 'in',
