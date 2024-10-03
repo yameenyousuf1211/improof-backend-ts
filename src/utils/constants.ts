@@ -82,22 +82,21 @@ export const ACTIVITY_LEVELS = Object.freeze({
   return bmr;
 };
 
-const calculateTDEE = (user:IUser,bmr:number) => {
+const calculateTDEE = (user: IUser, bmr: number) => {
   let tdee;
-  if (user.activityLevel == 'daily') {
+  if (user.activityLevel == 'never') { // sedentary
     tdee = bmr * 1.2;
-  } else if (user.activityLevel == 'often') {
+  } else if (user.activityLevel == 'rarely') { // lightly active
     tdee = bmr * 1.375;
-  } else if (user.activityLevel == 'sometimes') {
+  } else if (user.activityLevel == 'sometimes') { // moderately active
     tdee = bmr * 1.55;
-  } else if (user.activityLevel == 'rarely') {
+  } else if (user.activityLevel == 'often') { // very active
     tdee = bmr * 1.725;
-  }
-    else if (user.activityLevel == 'never') {
+  } else if (user.activityLevel == 'daily') { // extra active
     tdee = bmr * 1.9;
-    }
+  }
   return tdee;
-}
+};
 
 
 export const calculateMacro = (user: IUser) => {
